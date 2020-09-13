@@ -1,9 +1,13 @@
 <script lang="ts">
+	import StocksMap from './components/StocksMap.svelte';
+
 	export let name: string;
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
+	<h1>{name}</h1>
+
+	<StocksMap />
 </main>
 
 <style>
