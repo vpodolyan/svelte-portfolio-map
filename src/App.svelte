@@ -1,11 +1,14 @@
 <script lang="ts">
 	import StocksMap from './components/StocksMap.svelte';
+	import StockSearchInput from './components/StockSearchInput.svelte';
 
 	export let name: string;
 </script>
 
 <main>
 	<h1>{name}</h1>
+
+	<StockSearchInput />
 
 	<StocksMap />
 </main>

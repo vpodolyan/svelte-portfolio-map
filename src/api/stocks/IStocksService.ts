@@ -1,3 +1,5 @@
+import type { IStockInfo } from "./types/IStockInfo";
+
 export interface IStocksApi {
-    search(name: string);
+    search(name: string): Promise<IStockInfo[]>;
 }
