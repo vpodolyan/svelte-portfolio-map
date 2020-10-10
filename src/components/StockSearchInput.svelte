@@ -1,12 +1,21 @@
 
 <script lang="ts">
     import {stocksApi} from '../api/stocks';
-    import type { IStockInfo } from '../api/stocks/types/IStockInfo';
+    import type { IStockSearchInfo } from '../api/stocks/types/IStockSearchInfo';
 
-    let result: IStockInfo[] = [];
+    import { stocksData } from '../stores';
+
+    let result: IStockSearchInfo[] = [];
 
     async function handleChange({target: { value }}) {
         result = await stocksApi.search(value);
+    }
+
+    async function onStockClick(stock: IStockSearchInfo) {
+        try {
+            const result = await stocksApi.getQuoteInfo(stock.symbol);
+            stocksData.update(data => ({...data, children: [...data.children, {name: stock.symbol, value: +result.price}]})) 
+        } catch {}
     }
 </script>
 
@@ -14,11 +23,13 @@
     <div class="container">
         <input on:change={handleChange} />
         <div class='search-results'>
-            <div class='search-results__item'>Wallmart</div>
-            <div>Supper Pupper Rockets Corp.</div>
-            <div>Crazy Sunset Studio</div>
             {#each result as stock}
-                <div class='search-results__item'>{stock.name}</div>
+                <div
+                    class='search-results__item'
+                    on:click={() => onStockClick(stock)}
+                >
+                    {stock.name}
+                </div>
             {/each}
         </div>
     </div>

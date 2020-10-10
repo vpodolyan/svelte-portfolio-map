@@ -1,12 +1,15 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
     import { treemap, hierarchy } from 'd3';
     import { select } from 'd3-selection';
-    import { data } from '../data';
+    import { stocksData } from '../stores';
 
     let svgElement;
-    
-    onMount(() => {
+
+    stocksData.subscribe(data => {
+        drawTreeMap(data);
+    });
+
+    function drawTreeMap(data) {
         const root = hierarchy(data).sum((d) => d.value);
         const graph = treemap()
             .size([800, 800])
@@ -14,6 +17,8 @@
             (root);
 
         const svg = select(svgElement);
+
+        svg.html('');
 
         svg
             .selectAll("rect")
@@ -37,7 +42,7 @@
                 .text((d) => d.data.name)
                 .attr("font-size", "15px")
                 .attr("fill", "white")
-    })
+    }
 </script>
 
 <svg bind:this={svgElement} viewBox='0 0 800 800'>
