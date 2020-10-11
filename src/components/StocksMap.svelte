@@ -12,7 +12,7 @@
     function drawTreeMap(data) {
         const root = hierarchy(data).sum((d) => d.value);
         const graph = treemap()
-            .size([800, 800])
+            .size([600, 600])
             .padding(2)
             (root);
 
@@ -30,7 +30,7 @@
                 .attr('width', (d) => d.x1 - d.x0)
                 .attr('height', (d) => d.y1 - d.y0)
                 .style("stroke", "black")
-                .style("fill", "slateblue");
+                .style("fill", "#734E99");
         
         svg
             .selectAll("text")
